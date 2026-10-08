@@ -228,9 +228,9 @@ if st.button("🔐 Generate QR Code", use_container_width=True):
         # deployed Streamlit URL se replace karna hoga.
 
         verification_url = (
-            "http://localhost:8501/?certificate_id="
-            + certificate_id
-        )
+    "https://el-rera-qr-app-a5zrmgmtj4ghjvurbz9ssx.streamlit.app/?certificate_id="
+    + certificate_id
+)
 
         # QR contains ONLY the verification URL.
         # Actual intern/company information remains in
