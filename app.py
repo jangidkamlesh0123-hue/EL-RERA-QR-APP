@@ -12,27 +12,83 @@ from database import create_tables, get_connection
 # =====================================================
 
 st.set_page_config(
-    page_title="EL Rera Internship QR Verification",
+    page_title="EL Rera Certificate Verification",
     page_icon="🔐",
     layout="centered"
 )
 
-# Create database tables
 create_tables()
 
 
 # =====================================================
 # 🔒 FIXED COMPANY DETAILS
 # =====================================================
-# APNI ACTUAL COMPANY DETAILS YAHAN BHARO.
-# YE DETAILS APP KE USERS CHANGE NAHI KAR SAKTE.
 
 COMPANY_NAME = "RPAC CONSULTANTS & ADVISORS LLP"
-COMPANY_LLPIN = "ACW-3008"
-COMPANY_ADDRESS = "C- 39, First Floor, Lajpat Marg, Next to Crazy Coffee, Ashok Nagar, C- Scheme, Jaipur - 302001(Raj.)"
-COMPANY_CONTACT = "+91 9772933041 "
-COMPANY_EMAIL_ADDRESS = "rpacadvisorsllp2606@gmail.com"
-MANAGER_NAME = "Mr. Kaushal Jangid"
+COMPANY_LLPIN = ""
+COMPANY_ADDRESS = "shok Nagar,Raj.)"
+COMPANY_CONTACT = " "
+COMPANY_EMAIL_ADDRESS = "ail.com"
+MANAGER_NAME = "M"
+
+
+# =====================================================
+# PROFESSIONAL PAGE DESIGN
+# =====================================================
+
+st.markdown("""
+<style>
+
+.main-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 16px;
+    opacity: 0.75;
+    margin-bottom: 25px;
+}
+
+.verified-box {
+    padding: 18px;
+    border-radius: 12px;
+    text-align: center;
+    margin: 15px 0 25px 0;
+    border: 2px solid #2e7d32;
+}
+
+.verified-title {
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.info-box {
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(128,128,128,0.35);
+    margin-bottom: 12px;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 13px;
+    opacity: 0.7;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 
 # =====================================================
@@ -41,11 +97,18 @@ MANAGER_NAME = "Mr. Kaushal Jangid"
 
 certificate_id_from_url = st.query_params.get("certificate_id")
 
+
 if certificate_id_from_url:
 
-    st.title("🔐 Certificate Verification")
-    st.write("Verify an internship certificate using its Certificate ID.")
-    st.divider()
+    st.markdown(
+        '<div class="main-title">🔐 Internship Certificate</div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        '<div class="subtitle">Certificate Verification Portal</div>',
+        unsafe_allow_html=True
+    )
 
     connection = get_connection()
     cursor = connection.cursor()
@@ -66,47 +129,139 @@ if certificate_id_from_url:
     result = cursor.fetchone()
     connection.close()
 
+
+    # =================================================
+    # VERIFIED CERTIFICATE
+    # =================================================
+
     if result:
-        st.success("✅ Certificate Verified Successfully!")
 
-        st.subheader("📄 Internship Details")
+        st.markdown("""
+        <div class="verified-box">
+            <div class="verified-title">🟢 CERTIFICATE VERIFIED</div>
+            <div>This certificate has been successfully verified.</div>
+        </div>
+        """, unsafe_allow_html=True)
 
-        st.write("**Certificate ID:**", result[0])
-        st.write("**Intern Name:**", result[1])
-        st.write("**College Name:**", result[2])
-        st.write("**Internship Role / Work:**", result[3])
-        st.write("**Internship Start Date:**", result[4])
-        st.write("**Internship Completion Date:**", result[5])
-        st.write("**Total Internship Hours:**", f"{result[6]} Hours")
 
-        st.subheader("🏢 Company Details")
+        # -------------------------------------------------
+        # CERTIFICATE INFORMATION
+        # -------------------------------------------------
 
-        st.write("**Company Name:**", COMPANY_NAME)
-        st.write("**LLPIN:**", COMPANY_LLPIN)
-        st.write("**Address:**", COMPANY_ADDRESS)
-        st.write("**Contact:**", COMPANY_CONTACT)
-        st.write("**Email Address:**", COMPANY_EMAIL_ADDRESS)
-        st.write("**Managing Partner:**", MANAGER_NAME)
+        st.markdown(
+            '<div class="section-title">📄 Certificate Information</div>',
+            unsafe_allow_html=True
+        )
 
-        st.info("✅ Verification Status: Internship Completed")
+        st.markdown(
+            f"""
+            <div class="info-box">
+                <b>Certificate ID:</b> {result[0]}<br><br>
+                <b>Verification Status:</b> 🟢 Verified<br><br>
+                <b>Internship Status:</b> Internship Completed
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+
+        # -------------------------------------------------
+        # INTERN INFORMATION
+        # -------------------------------------------------
+
+        st.markdown(
+            '<div class="section-title">👩‍🎓 Intern Information</div>',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f"""
+            <div class="info-box">
+                <b>Intern Name:</b> {result[1]}<br><br>
+                <b>College Name:</b> {result[2]}<br><br>
+                <b>Internship Role / Work:</b> {result[3]}<br><br>
+                <b>Internship Start Date:</b> {result[4]}<br><br>
+                <b>Internship Completion Date:</b> {result[5]}<br><br>
+                <b>Total Internship Hours:</b> {result[6]} Hours
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+
+        # -------------------------------------------------
+        # COMPANY INFORMATION
+        # -------------------------------------------------
+
+        st.markdown(
+            '<div class="section-title">🏢 Company Information</div>',
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f"""
+            <div class="info-box">
+                <b>Company Name:</b> {COMPANY_NAME}<br><br>
+                <b>LLPIN:</b> {COMPANY_LLPIN}<br><br>
+                <b>Address:</b> {COMPANY_ADDRESS}<br><br>
+                <b>Contact:</b> {COMPANY_CONTACT}<br><br>
+                <b>Email Address:</b> {COMPANY_EMAIL_ADDRESS}<br><br>
+                <b>Managing Partner:</b> {MANAGER_NAME}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+
+        st.success(
+            "This internship certificate is valid and has been successfully verified."
+        )
+
+
+        st.markdown(
+            '<div class="footer">EL Rera Certificate Verification System</div>',
+            unsafe_allow_html=True
+        )
+
+
+    # =================================================
+    # INVALID CERTIFICATE
+    # =================================================
 
     else:
-        st.error("❌ Certificate Not Found or Invalid Certificate ID.")
+
+        st.error("🔴 Certificate Not Found")
+
+        st.markdown(
+            """
+            <div class="info-box">
+                <b>Verification Failed</b><br><br>
+                The Certificate ID entered or scanned could not be
+                found in the verification database.
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
         st.warning(
-            "Please check the Certificate ID and scan the correct QR code."
+            "Please check the QR code or Certificate ID and try again."
         )
 
     st.stop()
 
 
 # =====================================================
-# APP TITLE
+# QR GENERATOR PAGE
 # =====================================================
 
-st.title("🔐 EL Rera Internship QR Generator")
+st.markdown(
+    '<div class="main-title">🔐 EL Rera QR Generator</div>',
+    unsafe_allow_html=True
+)
 
-st.write(
-    "Generate a secure verification QR code for an internship certificate."
+st.markdown(
+    '<div class="subtitle">Generate a verification QR code for an internship certificate.</div>',
+    unsafe_allow_html=True
 )
 
 st.divider()
@@ -158,20 +313,20 @@ total_hours = st.number_input(
 
 if st.button("🔐 Generate QR Code", use_container_width=True):
 
-    # -------------------------------------------------
-    # VALIDATION
-    # -------------------------------------------------
-
     if not intern_name.strip():
+
         st.warning("Please enter Intern Name.")
 
     elif not college_name.strip():
+
         st.warning("Please enter College Name.")
 
     elif not internship_role.strip():
+
         st.warning("Please enter Internship Role / Work.")
 
     elif end_date < start_date:
+
         st.error(
             "Internship Completion Date cannot be before Start Date."
         )
@@ -188,8 +343,9 @@ if st.button("🔐 Generate QR Code", use_container_width=True):
             f"ELR-{start_date.strftime('%Y')}-{unique_id}"
         )
 
+
         # -------------------------------------------------
-        # SAVE INTERN DETAILS IN DATABASE
+        # SAVE INTERN DETAILS
         # -------------------------------------------------
 
         connection = get_connection()
@@ -219,28 +375,21 @@ if st.button("🔐 Generate QR Code", use_container_width=True):
         connection.commit()
         connection.close()
 
-        # -------------------------------------------------
-        # VERIFICATION URL
-        # -------------------------------------------------
-        # IMPORTANT:
-        # localhost sirf testing ke liye hai.
-        # Online deployment ke baad is URL ko apni
-        # deployed Streamlit URL se replace karna hoga.
+
+        # =================================================
+        # 🌐 PUBLIC VERIFICATION URL
+        # =================================================
 
         verification_url = (
-    "https://el-rera-qr-app-a5zrmgmtj4ghjvurbz9ssx.streamlit.app/?certificate_id="
-    + certificate_id
-)
+            "https://el-rera-qr-app-a5zrmgmtj4ghjvurbz9ssx.streamlit.app/"
+            "?certificate_id="
+            + certificate_id
+        )
 
-        # QR contains ONLY the verification URL.
-        # Actual intern/company information remains in
-        # the database/application.
 
-        qr_data = verification_url
-
-        # -------------------------------------------------
-        # CREATE QR CODE
-        # -------------------------------------------------
+        # =================================================
+        # CREATE QR
+        # =================================================
 
         qr = qrcode.QRCode(
             version=1,
@@ -249,14 +398,15 @@ if st.button("🔐 Generate QR Code", use_container_width=True):
             border=4
         )
 
-        qr.add_data(qr_data)
+        qr.add_data(verification_url)
         qr.make(fit=True)
 
         qr_image = qr.make_image()
 
-        # -------------------------------------------------
-        # CONVERT QR TO PNG
-        # -------------------------------------------------
+
+        # =================================================
+        # CONVERT TO PNG
+        # =================================================
 
         img_bytes = BytesIO()
 
@@ -267,15 +417,15 @@ if st.button("🔐 Generate QR Code", use_container_width=True):
 
         qr_bytes = img_bytes.getvalue()
 
-        # -------------------------------------------------
+
+        # =================================================
         # SHOW RESULT
-        # -------------------------------------------------
+        # =================================================
 
         st.success("✅ QR Code Generated Successfully!")
 
-        st.write(
-            "**Certificate ID:**",
-            certificate_id
+        st.markdown(
+            f"### Certificate ID: `{certificate_id}`"
         )
 
         st.image(
@@ -283,9 +433,10 @@ if st.button("🔐 Generate QR Code", use_container_width=True):
             width=300
         )
 
-        # -------------------------------------------------
+
+        # =================================================
         # DOWNLOAD QR
-        # -------------------------------------------------
+        # =================================================
 
         st.download_button(
             label="⬇️ Download QR Code",
@@ -295,11 +446,7 @@ if st.button("🔐 Generate QR Code", use_container_width=True):
             use_container_width=True
         )
 
-        # -------------------------------------------------
-        # INFORMATION
-        # -------------------------------------------------
-
         st.info(
-            "This QR code contains a verification link. "
-            "Place the QR code on the internship certificate."
+            "Place this QR code on the internship certificate. "
+            "Scanning the QR code will open the online verification page."
         )
